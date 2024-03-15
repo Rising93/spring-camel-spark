@@ -1,4 +1,4 @@
-package com.it.spark_spring.utils;
+package com.it.spark.spring.utils;
 
 import com.google.gson.Gson;
 import lombok.Getter;

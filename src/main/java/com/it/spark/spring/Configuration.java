@@ -1,4 +1,4 @@
-package com.it.spark_spring;
+package com.it.spark.spring;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
