@@ -16,15 +16,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 7
+    - name: Set up JDK 8 # Rename this step for clarity
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
+        java-version: '8' # Updated to Java 8
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
