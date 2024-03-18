@@ -1,33 +1,25 @@
 package com.it.spark.spring.services;
 
-import com.it.spark.spring.processor.AirportCountryProcessor;
-import com.it.spark.spring.processor.AirportLatitudeProcessor;
+import com.it.spark.spring.aggregate.OutputAggregate;
+import com.it.spark.spring.processor.WordAggregateProcessor;
 import com.it.spark.spring.processor.WordProcessor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SparkService extends RouteBuilder {
     public static final String WORD_COUNT = "direct:wordCount";
-    public static final String AIRPORT_BY_LATITUDE = "direct:airportByLatitude";
-    public static final String AIRPORT_BY_COUNTRY = "direct:airportByCountry";
+
     @Override
     public void configure(){
 
-
         from(WORD_COUNT)
-            .unmarshal().mimeMultipart()
             .process(new WordProcessor())
-        ;
-
-        from(AIRPORT_BY_LATITUDE)
-            .unmarshal().mimeMultipart()
-            .process(new AirportLatitudeProcessor())
-        ;
-
-        from(AIRPORT_BY_COUNTRY)
-            .unmarshal().mimeMultipart()
-            .process(new AirportCountryProcessor())
+            .split(body(), new OutputAggregate())
+                .process(new WordAggregateProcessor())
+            .end()
+            .marshal().json(JsonLibrary.Gson)
         ;
 
     }
