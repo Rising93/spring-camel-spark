@@ -8,6 +8,7 @@ import org.apache.camel.Exchange;
 public class OutputAggregate implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+
         JsonArray jsonArray = new JsonArray();
         if (oldExchange == null) {
             jsonArray.add(JsonParser.parseString(newExchange.getIn().getBody(String.class)).getAsJsonObject());
